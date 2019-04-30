@@ -28,7 +28,8 @@
 #define ON_ARG_NAME "on"
 #define OFF_ARG_NAME "off"
 
-#define HALF_PATTERN_STR_LEN 31
+#define HALF_PATTERN_STR_LEN 32
+#define PATTERN_STR_LEN 64
 
 // String tokenizing and int parsing
 #define DELIM " "
@@ -38,6 +39,7 @@
 // Constants about the pattern/image
 #define BYTE_BITWIDTH 8
 #define INT_BITWIDTH (sizeof(unsigned int) * BYTE_BITWIDTH)
+#define HALF_PATTERN_LEN 4
 
 #define PATTERN_LEN 2
 #define PATTERN_BITWIDTH (INT_BITWIDTH * PATTERN_LEN)
@@ -48,7 +50,6 @@
 // Masks and bit ops
 #define MSB_MASK 0xFF000000
 #define LSB_MASK 0x000000FF
-#define PATTERN_STR_MASK 0x00000001
 
 // Commands
 #define COMMANDS \

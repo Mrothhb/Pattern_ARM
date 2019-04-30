@@ -48,13 +48,30 @@ void testscrollHorizontal() {
    * abnormal cases, etc.
    */
 
-  pattern[0] = /* TODO */;
-  pattern[1] = /* TODO */;
+  pattern[0] =  0xAAAAAAAA;
+  pattern[1] =  0xAAAAAAAA;
 
-  scrollHorizontal( pattern, /* TODO */ );
+  scrollHorizontal( pattern, 1);
 
-  TEST( pattern[0] == /* TODO */ );
-  TEST( pattern[1] == /* TODO */ );
+  TEST( pattern[0] ==  0x55555555 );
+  TEST( pattern[1] ==  0x55555555 );
+  
+  pattern[0] =  0x0;
+  pattern[1] =  0xF0000000;
+  scrollHorizontal( pattern, 1);
+  TEST( pattern[0] ==  0x0 );
+  TEST( pattern[1] ==  0x78000000 );
+
+  
+  pattern[0] =  0xFFFFFFFF;
+  pattern[1] =  0x80000000;
+  scrollHorizontal( pattern, -1);
+  TEST( pattern[0] ==  0 );
+  TEST( pattern[1] ==  0 );
+
+  printf(" %x ", pattern[1] );
+  printf(" %x ", pattern[1]);
+  
 }
 
 int main( void ) {

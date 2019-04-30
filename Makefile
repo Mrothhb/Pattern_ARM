@@ -17,8 +17,8 @@ ASM_SRCS	= printPattern.s set.s clear.s toggle.s invert.s \
 REG_C_SRCS	= commandLoop.c 
 EC_C_SRCS	= commandLoopEC.c mirrorHorizontal.c mirrorVertical.c \
 		rotateClockwise.c rotateCounterClockwise.c transpose.c 
-REG_ASM_SRCS	= # TODO
-EC_ASM_SRCS	= # TODO
+REG_ASM_SRCS	= # N/A
+EC_ASM_SRCS	= # N/A
 
 C_OBJS		= $(C_SRCS:.c=.o)
 ASM_OBJS	= $(ASM_SRCS:.s=.o)
@@ -99,7 +99,8 @@ clean:
 testloadPatternStringDeps = testloadPatternString.o loadPatternString.o
 testprintPatternDeps = testprintPattern.o printPattern.o outputChar.o myRem.o
 testtoggleDeps = testtoggle.o toggle.o
-testcharacterDeps = testcharacter.o character.o loadPatternString.o
+testcharacterDeps = testcharacter.o character.o loadPatternString.o \
+		    intervalContains.o
 testscrollVerticalDeps = testscrollVertical.o scrollVertical.o myRem.o 
 testsayDeps = testsay.o say.o printPattern.o outputChar.o character.o \
 	      loadPatternString.o myRem.o

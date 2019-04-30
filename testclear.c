@@ -17,10 +17,10 @@
  * void clear( unsigned int pattern[], unsigned int part0, unsigned int part1 );
  *
  * Works similar to set(), except this function turns off the specified bits in 
- * pattern with the bit patterns part0and part1. If a bit value in part0or part1
- * is 1, then its corresponding bit in patternshould become 0. However, if the 
- * bit value in part0or part1is 0, then its corresponding bit in patternshould
- * remain the same.
+ * pattern with the bit patterns part0and part1. If a bit value in part0 or 
+ * part1 is 1, then its corresponding bit in pattern should become 0. However,
+ * if the bit value in part0 or part1 is 0, then its corresponding bit in 
+ * pattern should remain the same.
  */
 void testclear() {
   unsigned int pattern[PATTERN_LEN] = { 0 };

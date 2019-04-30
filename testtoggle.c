@@ -14,13 +14,12 @@
 /*
  * Unit Test for toggle.s
  *
- * void clear( unsigned int pattern[], unsigned int part0, unsigned int part1 );
- *
- * Works similar to set(), except this function turns off the specified bits in 
- * pattern with the bit patterns part0and part1. If a bit value in part0or part1
- * is 1, then its corresponding bit in patternshould become 0. However, if the 
- * bit value in part0or part1is 0, then its corresponding bit in patternshould
- * remain the same.
+ * Toggles all the bits in patternspecified in part0and part1
+ * If the bit value in part0or part1is 1, then its corresponding bit in pattern
+ * should invert (i.e. 1 becomes 0, and 0 becomes 1). However, if the bit value
+ * in part0 or part1is 0, then the corresponding bit in pattern should remain 
+ * same.
+ * 
  */
 void testtoggle() {
   unsigned int pattern[PATTERN_LEN] = { 0 };

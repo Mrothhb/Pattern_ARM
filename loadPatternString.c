@@ -1,52 +1,75 @@
 /*
  * Filename: loadPatternString.c
- * Author: TODO
- * UserId: TODO
+ * Author: Matt Roth 
+ * UserId: cs30xgs
  * Date: TODO
- * Sources of help: TODO
+ * Sources of help: textbook, cse30 website, lecture notes and discussion notes.
  */
 
 #include <stdio.h>
 #include "pa2.h"
 
-void loadPatternString( unsigned int pattern[], const char * patternStr ) { 
-  /*
-   * Function Name: function name() TODO
-   * Function Prototype: Definition of the function. For example, for main this
-   *                     would be int main( int argc, char * argv[] );
-   * Description:  Description of how the function behaves
-   * Parameters:   Name
-   *               any parameters passed into the function, and how they are
-   *               used. If no parameters are used, say None
-   * Side Effects: Any behaviors the function might exhibit that are not
-   *               immediately apparent (related to the return value). 
-   *               include updating a value pointed to by a parameter, 
-   *               printing things to stdout/stderr, reading/writing from file
-   *               parameters, etc (ask on Piazza if you are unsure if an action
-   *               you 
-   *               are taking has a side effect). If there are no side 
-   *               effects, say None
-   * Error Conditions: Explain any potential errors/exceptions that may occur if
-   *                   your function is used incorrectly. If there are no error
-   *                   conditions, say None
-   * Return Value:     What does the return value of this function represent/what
-   *                   will it be used for?
-   */
-  unsigned int MASK = 0x00000001;
+/*
+ * Function Name: loadPatternString()
+ * Function Prototype:  void loadPatternString( unsigned int pattern[], const 
+ *                           char * patternStr );
+ * Description:  Goes through each character in patternStr and, depending on its
+ *               value, sets the bits in pattern to either be on or off. The 
+ *               patternStr is assumed to be exactly 64 characters long, where 
+ *               each '@'(DEFAULT_ON_CHAR) character represents an "on" bit and
+ *                each '-'(DEFAULT_OFF_CHAR) character represents an "off" bit.
+ * Parameters:   pattern[] is the pattern to alter bits, patternStr is the 
+ *               string containing a seqeunce of chars to use as a bit set 
+ *               indicator.
+ * Side Effects: The pattern from the indicated string will set the bits in the
+ *               pattern[] array to the desired format.
+ *             
+ * Error Conditions: None. 
+ *                    
+ * Return Value:     None.     
+ */
+
+void loadPatternString( unsigned int pattern[], const char * patternStr ) {
+
+  // The mask will act as a bit shifting tool to set or clear bits in pattern[]
+  unsigned int MASK = 0x80000000;
+  int i;
 
   // Initialize the patterns to zero 
   pattern[0] = 0;
   pattern[1] = 0;
 
+  // Set the bits for pattern[0]
   for(i = 0; i < HALF_PATTERN_STR_LEN; i++ ) {
-    if( *patternStr[i] == DEFAULT_ON_CHAR ) {
-      ( pattern[0] = *pattern[0] | MASK );
-      MASK << 1;
+
+    // If the character in string is '@' default on set the bit to 1
+    if( patternStr[i] == DEFAULT_ON_CHAR ) {
+      ( pattern[0] = pattern[0] | MASK );
+      MASK = MASK >> 1;
     }
 
-    else if( *patternStr[i] == DEFAULT_OFF_CHAR ) {
-      MASK << 1;
-    }
+    // If the character in the string is '-' default off set the bit to 0
+    else {
+      MASK = MASK >> 1;
+    } 
   }
 
+  // Reset the MASK 
+  MASK = 0x80000000;
+
+  // Set the bits for pattern[1] 
+  for(i = HALF_PATTERN_STR_LEN; i < PATTERN_STR_LEN; i++ ) {
+      //printf(" patternStr[%d] is %c \n",i, patternStr[i] );
+
+    // If the character in string is '@' default on set the bit to 1
+    if( patternStr[i] == DEFAULT_ON_CHAR ) {
+      ( pattern[1] = pattern[1] | MASK );
+     MASK = MASK >> 1;
+    }
+
+    // If the character in the string is '-' default off set the bit to 0
+    else {
+     MASK = MASK >> 1;
+    }
+  }
 }

@@ -14,11 +14,11 @@
 /*
  * Unit Test for set.s
  *
- * void scrollHorizontal( unsigned int pattern[], const int offset );
+ *  Turns on the specified bits in pattern with the bit patterns part0 and part1
+ * If a bit value in part0 or part1 is 1, then its corresponding bit in pattern
+ * should also become 1. However, if the bit value in part0 or part1
+ * is 0, then its corresponding bit in pattern should remain the same.
  *
- * Scroll horizontally by offset.
- *    If offset is positive, shift bits right.
- *    If offset is negative, shift bits left.
  */
 void testset() {
   unsigned int pattern[PATTERN_LEN] = { 0 };

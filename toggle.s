@@ -2,7 +2,7 @@
  * Filename: toggle.s
  * Author: Matt Roth 
  * UserId: cs30xgs
- * Date: TODO, 2019
+ * Date: May 1st, 2019
  * Sources of Help: Textbook, lecture notes, and discussion section notes.
  *
  */
@@ -28,14 +28,13 @@
 					@ alignment
 /*
  * Function Name: toggle()
- * Function Prototype: void clear(unsigned int pattern[], unsigned int part0, 
- 					unsigned int part1 );
- * Description: TODO This function works similar to set(), except this function turns
- * 		off the specified bits in pattern with the bit patterns part0 
- *		and part1. If a bit value in part0 or part1 is 1, then its 
- *		corresponding bit in pattern should become 0. However, if the 
- *		bit value in part0 or part1 is 0, then its corresponding bit in 
- *		pattern should remain the same.
+ * Function Prototype: void toggle( unsigned int pattern[], unsigned int part0,
+ * 					unsigned int part1 );
+ * Description: Toggles all the bits in pattern specified in part0and part1. 
+ *		If the bit value in part0 or part1 is 1, then its corresponding
+ *		bit in pattern should invert (i.e. 1 becomes 0, and 0 becomes 1)
+ *		However, if the bit value in part0 or part1 is 0, then the 
+ *		corresponding bit in pattern should remain the same.
  * Parameters:	pattern[] the bit pattern to change, part0 and part1 the bit 
  * 	       	patterns to change the bits in pattern[]
  *
@@ -76,12 +75,14 @@ toggle:
 	str	r2, [fp, PART1_OFFSET]		@ store part1 in memory
 
 @ first OR operation on pattern[0]
+
 	ldr	r3, [fp, PATTERN_0_OFFSET]	@ get the current value of 
 						@ pattern[0]
 	ldr	r2, [fp, PART0_OFFSET]		@ get the current value of part0
 	eor	r3, r3, r2			@ XOR pattern[0] with part0
 	str	r3, [r0]			@ update pattern[0] = r3
 @ second OR operation on pattern[1]
+
 	ldr	r3, [fp, PATTERN_1_OFFSET]	@ get the current value of patt-
 						@ ern[1]
 	ldr	r2, [fp, PART1_OFFSET]		@ get the value of part1

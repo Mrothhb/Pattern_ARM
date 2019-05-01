@@ -28,7 +28,7 @@
 int findCommand( const char * cmdString, const char * commands[] ) {
 
   int i = 0;
-  int found = -1;   // the return parameter determining found status 
+  int found = -1;   // the return parameter determining if string is found 
 
   // Null check to see if the parameters are NULL value 
   if( cmdString == NULL || commands == NULL ) {

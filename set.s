@@ -2,14 +2,14 @@
  * Filename: set.s
  * Author: Matt Roth 
  * UserId: cs30xgs
- * Date: TODO, 2019
+ * Date: May 1st 2019
  * Sources of Help: Textbook, lecture notes, and discussion section notes.
  *
  */
 
 @ Raspberry Pi directives
 	.cpu	cortex-a53		@ Version of our Pis
-	.syntax	unified			@ Modern ARM syntax
+
 
 	.equ	FP_OFFSET, 4		@ Offset from sp to set fp
 	
@@ -47,7 +47,6 @@
  *	r2 - arg 3 -- ( parameter ) the part1 parameter a bit pattern to clear
  *	r3 - instr -- used for computational operations and temp for storage 
  *  		      during loads and stores to memory.
- *	
  * Stack variables:
  *	pattern[0] - [fp -12] --  holds the memory address to pattern[] in arg 1
  *				  and the pattern[0] element.
@@ -62,7 +61,7 @@ set:
 	add	fp, sp, FP_OFFSET		@ Set fp to base of saved 
 						@ registers
 						@ Uses 4, from (#_of_regs_saved 
-						@ - 1)*4.
+@ Allocate space to store the parameters 	@ - 1)*4.
 	sub	sp, sp, PARAM_SPACE 		@ allocate space for the param-
 						@ eters
 	ldr	r3, [r0]			@ load value in pattern[0] in r3

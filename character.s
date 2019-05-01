@@ -2,7 +2,7 @@
  * Filename: character.s
  * Author: Matt Roth 
  * UserId: cs30xgs
- * Date:	TODO 
+ * Date: May 1st, 2019 
  * Sources of Help: Textbook, lecture notes, and discussion section notes.
  *
  */
@@ -53,9 +53,8 @@
  *	r0 - arg 1 -- ( parameter ) the address of pattern[]
  *	r1 - arg 2 -- ( parameter ) the ch character to copy pattern into array
  *	r2 - arg 3 -- ( parameter ) alphabetPatterns[] array of letter strings
- *	r3 - arg 4 -- ( parameter ) digitPatterns[] array of numbers strings 
- *	
- *	
+ *	r3 - arg 4 -- ( parameter ) digitPatterns[] array of numbers strings.
+ *
  * Stack variables: 
  *	pattern[]  	   - [fp -8]  --  holds the memory address to pattern[] 
  *	ch	   	   - [fp -9]  --  holds the parameter for ch the letter 

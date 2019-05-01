@@ -1,21 +1,20 @@
 /*
- * Filename: testclear.c
- * Author: TODO
- * UserId: TODO
- * Date: TODO
- * Sources of help: TODO
+ * Filename: testloadPatternString.c
+ * Author: Matt Roth
+ * UserId: cs30xgs
+ * Date: May 1st, 2019
+ * Sources of help: Textbook, lecture notes, discussion notes, cse 30 website.
  */
 
 #include <stdio.h>
-
 #include "pa2.h"
 #include "test.h"
 
 /*
  * Unit Test for loadPatterString.c
  *
- * Goes through each character in patternStrand, depending on its value, sets 
- * the bits in patternto either be on or off. The patternStris assumed to be 
+ * Goes through each character in patternStr and, depending on its value, sets 
+ * the bits in pattern to either be on or off. The patternStr is assumed to be 
  * exactly 64 characters long, where each '@'(DEFAULT_ON_CHAR) character 
  * represents an "on" bit and each '-'(DEFAULT_OFF_CHAR) character represents an
  * "off" bit.
@@ -32,7 +31,9 @@ void testloadPatternString() {
   const char * patternStr4 = 
     "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
   const char * patternStr5 = 
-    "@@@@@@@@@@--------";
+    "@-@@@@@-@@@-@@@@@-@@@@@-@@@-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
+  const char * patternStr6 =
+    "@-@-@-@@@@--@@-@@@@-@@@@@--@@---@---@---@---@---@---@---@---@---";
 
 
   // test given string 
@@ -57,8 +58,12 @@ void testloadPatternString() {
 
   // Test length < 64 string 
   loadPatternString( pattern, patternStr5 );
-  TEST ( pattern[0] == 0xFFC00000 );
-  TEST ( pattern[1] == 0 );
+  TEST ( pattern[0] == 0xBEEFBEEF );
+  TEST ( pattern[1] == 0xFFFFFFFF );
+
+  loadPatternString( pattern, patternStr6 );
+  TEST( pattern[0] == 0xABCDEF98 );
+  TEST( pattern[1] == 0x88888888 );
 }
 
 int main( void ) {

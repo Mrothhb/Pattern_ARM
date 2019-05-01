@@ -1,9 +1,9 @@
 /*
  * Filename: testclear.c
- * Author: TODO
- * UserId: TODO
- * Date: TODO
- * Sources of help: TODO
+ * Author: Matt Roth
+ * UserId: cs30xgs
+ * Date: May 1st, 2019
+ * Sources of help: Textbook, cse 30 website, lecture notes, discussion notes.
  */
 
 #include <stdio.h>
@@ -17,7 +17,7 @@
  * void clear( unsigned int pattern[], unsigned int part0, unsigned int part1 );
  *
  * Works similar to set(), except this function turns off the specified bits in 
- * pattern with the bit patterns part0and part1. If a bit value in part0 or 
+ * pattern with the bit patterns part0 and part1. If a bit value in part0 or 
  * part1 is 1, then its corresponding bit in pattern should become 0. However,
  * if the bit value in part0 or part1 is 0, then its corresponding bit in 
  * pattern should remain the same.

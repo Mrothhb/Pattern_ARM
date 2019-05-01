@@ -2,7 +2,7 @@
  * Filename: scrollHorizontal.c
  * Author: Matt Roth 
  * UserId: cs30xgs
- * Date: TODO
+ * Date: May 1st, 2019
  * Sources of help: textbook, cse30 website, lecture notes and discussion notes.
  */
 

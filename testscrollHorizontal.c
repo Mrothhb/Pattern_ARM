@@ -1,13 +1,12 @@
 /*
  * Filename: testscrollHorizontal.c
- * Author: TODO
- * UserId: TODO
- * Date: TODO
- * Sources of help: TODO
+ * Author: Matt Roth
+ * UserId: cs30xgs
+ * Date: May 1st, 2019
+ * Sources of help: Texttbook, cse30 website, lecture notes, discussion notes.
  */
 
 #include <stdio.h>
-
 #include "pa2.h"
 #include "test.h"
 
@@ -41,13 +40,6 @@ void testscrollHorizontal() {
   TEST( pattern[0] == 0xBADCFE10 );
   TEST( pattern[1] == 0xCCCCCCCC );
 
-  /*
-   * TODO: YOU MUST WRITE MORE TEST CASES FOR FULL POINTS!
-   *
-   * Some things to think about are error cases, extreme cases, normal cases,
-   * abnormal cases, etc.
-   */
-
   pattern[0] =  0xAAAAAAAA;
   pattern[1] =  0xAAAAAAAA;
 
@@ -68,10 +60,6 @@ void testscrollHorizontal() {
   scrollHorizontal( pattern, -1);
   TEST( pattern[0] ==  0xDDDDDDDD);
   TEST( pattern[1] ==  0x1000000 );
-  
-
-  printf(" %x \n\n\n", pattern[1]);
-
    
   pattern[0] =  0x00000001;
   pattern[1] =  0xCCCCCCCC;
@@ -83,8 +71,6 @@ void testscrollHorizontal() {
   scrollHorizontal( pattern, 10);
   TEST( pattern[0] ==  0xFF000000);
   TEST( pattern[1] == 0x000000FF);
-  
-  
 }
 
 int main( void ) {

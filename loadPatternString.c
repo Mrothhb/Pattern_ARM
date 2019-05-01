@@ -2,7 +2,7 @@
  * Filename: loadPatternString.c
  * Author: Matt Roth 
  * UserId: cs30xgs
- * Date: TODO
+ * Date: May 1st, 2019
  * Sources of help: textbook, cse30 website, lecture notes and discussion notes.
  */
 
@@ -28,7 +28,6 @@
  *                    
  * Return Value:     None.     
  */
-
 void loadPatternString( unsigned int pattern[], const char * patternStr ) {
 
   // The mask will act as a bit shifting tool to set or clear bits in pattern[]
@@ -59,7 +58,6 @@ void loadPatternString( unsigned int pattern[], const char * patternStr ) {
 
   // Set the bits for pattern[1] 
   for(i = HALF_PATTERN_STR_LEN; i < PATTERN_STR_LEN; i++ ) {
-      //printf(" patternStr[%d] is %c \n",i, patternStr[i] );
 
     // If the character in string is '@' default on set the bit to 1
     if( patternStr[i] == DEFAULT_ON_CHAR ) {

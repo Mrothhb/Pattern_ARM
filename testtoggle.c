@@ -1,24 +1,23 @@
 /*
- * Filename: testclear.c
- * Author: TODO
- * UserId: TODO
- * Date: TODO
- * Sources of help: TODO
+ * Filename: testtoggle.c
+ * Author: Matt Roth
+ * UserId: cs30xgs
+ * Date: May 1st, 2019
+ * Sources of help: Textbook, cse30 website, lecture notes, discussion notes.
  */
 
 #include <stdio.h>
-
 #include "pa2.h"
 #include "test.h"
 
 /*
  * Unit Test for toggle.s
  *
- * Toggles all the bits in patternspecified in part0and part1
- * If the bit value in part0or part1is 1, then its corresponding bit in pattern
- * should invert (i.e. 1 becomes 0, and 0 becomes 1). However, if the bit value
- * in part0 or part1is 0, then the corresponding bit in pattern should remain 
- * same.
+ * Toggles all the bits in pattern specified in part0 and part1
+ * If the bit value in part0 or part1 is 1, then its corresponding bit in 
+ * pattern should invert (i.e. 1 becomes 0, and 0 becomes 1). However, if the 
+ * bit value in part0 or part1is 0, then the corresponding bit in pattern should
+ * remain same.
  * 
  */
 void testtoggle() {

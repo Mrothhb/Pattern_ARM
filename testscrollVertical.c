@@ -1,24 +1,21 @@
 /*
- * Filename: testscrollHorizontal.c
- * Author: TODO
- * UserId: TODO
- * Date: TODO
- * Sources of help: TODO
+ * Filename: testscrollVertical.c
+ * Author: Matt Roth
+ * UserId: cs30xgs
+ * Date: May 1st, 2019
+ * Sources of help: Textbook, cse 30 website, lecture notes, discussion notes.
  */
 
 #include <stdio.h>
-
 #include "pa2.h"
 #include "test.h"
 
 /*
- * Unit Test for scrollHorizontal.c
+ * Unit Test for scrollVertical.c
+ * Scroll pattern vertically based on offset. If offset is positive, scroll down
+ * and wrap the bits around to the top. If offsetis negative, scroll up and wrap
+ * the bits around to the bottom.
  *
- * void TODO scrollHorizontal( unsigned int pattern[], const int offset );
- *
- * Scroll horizontally by offset.
- *    If offset is positive, shift bits right.
- *    If offset is negative, shift bits left.
  */
 void testscrollVertical() {
 
@@ -27,7 +24,7 @@ void testscrollVertical() {
   pattern[0] = 0xFEDCBA98;
   pattern[1] = 0x76543210;
 
-  scrollVertical( pattern, -1);
+  scrollVertical( pattern, 1);
   
   TEST( pattern[0] == 0x10FEDCBA);
   TEST( pattern[1] == 0x98765432); 
@@ -35,7 +32,7 @@ void testscrollVertical() {
   pattern[0] = 0xFFFFFFFF;
   pattern[1] = 0xAAAAAAAA;
 
-  scrollVertical( pattern, 1);
+  scrollVertical( pattern, -1);
   
   TEST( pattern[0] == 0xFFFFFFAA);
   TEST( pattern[1] == 0xAAAAAAFF); 
@@ -44,44 +41,42 @@ void testscrollVertical() {
   pattern[0] = 0xFFFFFFFF;
   pattern[1] = 0xAAAAAAAA;
 
-  scrollVertical( pattern, -2);
+  scrollVertical( pattern, 2);
   
   TEST( pattern[0] == 0xAAAAFFFF);
   TEST( pattern[1] == 0xFFFFAAAA); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
-
-  pattern[0] = 0xFFFFFFFF;
-  pattern[1] = 0xAAAAAAAA;
-
-  scrollVertical( pattern, 9);
-  
-  TEST( pattern[0] == 0xFFFFFFAA);
-  TEST( pattern[1] == 0xAAAAAAFF); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
 
   pattern[0] = 0xFFFFFFFF;
   pattern[1] = 0xAAAAAAAA;
 
   scrollVertical( pattern, -9);
   
+  TEST( pattern[0] == 0xFFFFFFAA);
+  TEST( pattern[1] == 0xAAAAAAFF); 
+
+  pattern[0] = 0xFFFFFFFF;
+  pattern[1] = 0xAAAAAAAA;
+
+  scrollVertical( pattern, 9);
+  
   TEST( pattern[0] == 0xAAFFFFFF);
   TEST( pattern[1] == 0xFFAAAAAA); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
-
   
   pattern[0] = 0x88888888;
   pattern[1] = 0x10101010;
 
-  scrollVertical( pattern, 1);
+  scrollVertical( pattern, -1);
   
   TEST( pattern[0] == 0x88888810);
   TEST( pattern[1] == 0x10101088); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
+ 
+  pattern[0] = 0xFFFFFFFF;
+  pattern[1] = 0xAAAAAAAA;
 
+  scrollVertical( pattern, -64);
+  
+  TEST( pattern[0] == 0xFFFFFFFF);
+  TEST( pattern[1] == 0xAAAAAAAA); 
 
   pattern[0] = 0xFFFFFFFF;
   pattern[1] = 0xAAAAAAAA;
@@ -90,29 +85,14 @@ void testscrollVertical() {
   
   TEST( pattern[0] == 0xFFFFFFFF);
   TEST( pattern[1] == 0xAAAAAAAA); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
-
 
   pattern[0] = 0xFFFFFFFF;
   pattern[1] = 0xAAAAAAAA;
 
-  scrollVertical( pattern, -64);
-  
-  TEST( pattern[0] == 0xFFFFFFFF);
-  TEST( pattern[1] == 0xAAAAAAAA); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
-
-  pattern[0] = 0xFFFFFFFF;
-  pattern[1] = 0xAAAAAAAA;
-
-  scrollVertical( pattern, -65);
+  scrollVertical( pattern, 65);
   
   TEST( pattern[0] == 0xAAFFFFFF);
   TEST( pattern[1] == 0xFFAAAAAA); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
 
   pattern[0] = 0xFFFFFFFF;
   pattern[1] = 0xAAAAAAAA;
@@ -121,8 +101,6 @@ void testscrollVertical() {
   
   TEST( pattern[0] == 0xFFFFFFFF);
   TEST( pattern[1] == 0xAAAAAAAA); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
 
   pattern[0] = 0;
   pattern[1] = 0;
@@ -131,14 +109,11 @@ void testscrollVertical() {
   
   TEST( pattern[0] == 0);
   TEST( pattern[1] == 0); 
-  printf(" pattern[0] %x \n", pattern[0]);
-  printf(" pattern[1] %x \n", pattern[1]);
-
 }
 
 int main( void ) {
 
-  fprintf( stderr, "Running tests for scrollHorizontal...\n" );
+  fprintf( stderr, "Running tests for scrollVertical...\n" );
   testscrollVertical();
   fprintf( stderr, "Done running tests!\n" );
 

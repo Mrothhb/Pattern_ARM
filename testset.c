@@ -1,20 +1,19 @@
 /*
  * Filename: testset.c
- * Author: TODO
- * UserId: TODO
- * Date: TODO
- * Sources of help: TODO
+ * Author: Matt Roth
+ * UserId: cs30xgs
+ * Date: May 1st, 2019
+ * Sources of help: textbook, cse30 website, lecture notes, discussion notes.
  */
 
 #include <stdio.h>
-
 #include "pa2.h"
 #include "test.h"
 
 /*
  * Unit Test for set.s
  *
- *  Turns on the specified bits in pattern with the bit patterns part0 and part1
+ * Turns on the specified bits in pattern with the bit patterns part0 and part1
  * If a bit value in part0 or part1 is 1, then its corresponding bit in pattern
  * should also become 1. However, if the bit value in part0 or part1
  * is 0, then its corresponding bit in pattern should remain the same.

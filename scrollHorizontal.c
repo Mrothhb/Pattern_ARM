@@ -67,7 +67,7 @@ void scrollHorizontalRotator( unsigned int pattern[], int offset,
   // Mask to extract the bit in the current byte for the right most bit
   unsigned int r_bit_mask = 0x01000000;
   // Mask to extract the bit in the current byte for the left most bit
-  unsigned int l_bit_mask = 0x8;
+  unsigned int l_bit_mask = 0x80000000;
   // The current byte to bit manipulate in the pattern[] of 4 bytes
   unsigned int current_byte = 0;
   // The temp holder for the extracted bit to replace in the pattern 

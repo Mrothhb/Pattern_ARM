@@ -71,6 +71,69 @@ void testscrollVertical() {
   printf(" pattern[0] %x \n", pattern[0]);
   printf(" pattern[1] %x \n", pattern[1]);
 
+  
+  pattern[0] = 0x88888888;
+  pattern[1] = 0x10101010;
+
+  scrollVertical( pattern, 1);
+  
+  TEST( pattern[0] == 0x88888810);
+  TEST( pattern[1] == 0x10101088); 
+  printf(" pattern[0] %x \n", pattern[0]);
+  printf(" pattern[1] %x \n", pattern[1]);
+
+
+  pattern[0] = 0xFFFFFFFF;
+  pattern[1] = 0xAAAAAAAA;
+
+  scrollVertical( pattern, 64);
+  
+  TEST( pattern[0] == 0xFFFFFFFF);
+  TEST( pattern[1] == 0xAAAAAAAA); 
+  printf(" pattern[0] %x \n", pattern[0]);
+  printf(" pattern[1] %x \n", pattern[1]);
+
+
+  pattern[0] = 0xFFFFFFFF;
+  pattern[1] = 0xAAAAAAAA;
+
+  scrollVertical( pattern, -64);
+  
+  TEST( pattern[0] == 0xFFFFFFFF);
+  TEST( pattern[1] == 0xAAAAAAAA); 
+  printf(" pattern[0] %x \n", pattern[0]);
+  printf(" pattern[1] %x \n", pattern[1]);
+
+  pattern[0] = 0xFFFFFFFF;
+  pattern[1] = 0xAAAAAAAA;
+
+  scrollVertical( pattern, -65);
+  
+  TEST( pattern[0] == 0xAAFFFFFF);
+  TEST( pattern[1] == 0xFFAAAAAA); 
+  printf(" pattern[0] %x \n", pattern[0]);
+  printf(" pattern[1] %x \n", pattern[1]);
+
+  pattern[0] = 0xFFFFFFFF;
+  pattern[1] = 0xAAAAAAAA;
+
+  scrollVertical( pattern, 0);
+  
+  TEST( pattern[0] == 0xFFFFFFFF);
+  TEST( pattern[1] == 0xAAAAAAAA); 
+  printf(" pattern[0] %x \n", pattern[0]);
+  printf(" pattern[1] %x \n", pattern[1]);
+
+  pattern[0] = 0;
+  pattern[1] = 0;
+
+  scrollVertical( pattern, 0);
+  
+  TEST( pattern[0] == 0);
+  TEST( pattern[1] == 0); 
+  printf(" pattern[0] %x \n", pattern[0]);
+  printf(" pattern[1] %x \n", pattern[1]);
+
 }
 
 int main( void ) {

@@ -9,7 +9,7 @@
 
 @ Raspberry Pi directives
 	.cpu	cortex-a53		@ Version of our Pis
-
+	.syntax	unified			@ Modern ARM syntax
 
 	.equ	FP_OFFSET, 4		@ Offset from sp to set fp
 	
@@ -62,26 +62,30 @@ set:
 						@ registers
 						@ Uses 4, from (#_of_regs_saved 
 @ Allocate space to store the parameters 	@ - 1)*4.
+
 	sub	sp, sp, PARAM_SPACE 		@ allocate space for the param-
 						@ eters
 	ldr	r3, [r0]			@ load value in pattern[0] in r3
 	str	r3, [fp, PATTERN_0_OFFSET]	@ store pattern[0] in memory
 	ldr	r3, [r0, PATTERN_INCR]		@ load value in pattern[1] in r3
 	str	r3, [fp, PATTERN_1_OFFSET]	@ store pattern[1] in memory
-
 	str	r1, [fp, PART0_OFFSET]		@ store part0 in memory
 	str	r2, [fp, PART1_OFFSET]		@ store part1 in memory
 
 @ first OR operation on pattern[0]
+
 	ldr	r3, [fp, PATTERN_0_OFFSET]	@ get the current value of 
-						@ pattern[0]
+
 	ldr	r2, [fp, PART0_OFFSET]		@ get the current value of part0
 	orr	r3, r3, r2			@ OR pattern[0] with part0
 	str	r3, [r0]			@ update pattern[0] = r3
+
 @ second OR operation on pattern[1]
+
 	ldr	r3, [fp, PATTERN_1_OFFSET]	@ get the current value of patt-
 						@ ern[1]
 	ldr	r2, [fp, PART1_OFFSET]		@ get the value of par1
+	
 	orr	r3, r3, r2			@ pattern[1] OR part1
 	str	r3, [r0, PATTERN_INCR]		@ store r3 in pattern[1]
 

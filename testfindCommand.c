@@ -1,9 +1,9 @@
 /*
- * Filename: testscrollHorizontal.c
- * Author: TODO
- * UserId: TODO
- * Date: TODO
- * Sources of help: TODO
+ * Filename: testfindCommand.c
+ * Author: Matt Roth
+ * UserId: cs30xgs
+ * Date: May 1st, 2019
+ * Sources of help: Textbook, lecture notes, discussion notes.
  */
 
 #include <stdio.h>
@@ -12,19 +12,8 @@
 #include "test.h"
 
 /*
- * Function Name: TODO()
- * Function Prototype:  void scrollHorizontal( unsigned int pattern[], 
- *                                                              int offset );
- * Description:  This function will scroll pattern horizontally based on offset
- *               If offset is positive, scroll right and wrap the bits around to
- *               the left. If offset is negative, scroll left and wrap the bits 
- *               around to the right. 
- * Parameters:   pattern[] is the pattern to alter bits, offset the scroll 
- *               direction.
- * Side Effects: The bit pattern will shift horizontally in the pattern[]. 
- * Error Conditions: None. 
- *                    
- * Return Value:     TODO     
+ * Unit tests for findCommand()
+ * Look for the given cmdString in commands and return its index.
  */
 
 void testfindCommand() {
@@ -37,8 +26,7 @@ void testfindCommand() {
   const char * cmdStr6 = "toggle set";
   const char * cmdStr7 = " set";
   const char * cmdStr8 = " ";
-  const char * nullStr = NULL;
-  const char * nullPtr = NULL;
+  const char * cmdStr9 = "scrollVertical";
 
   int index;
 
@@ -74,13 +62,10 @@ void testfindCommand() {
 
   TEST( index == -1 );
 
-  index = findCommand( nullStr, commandStr );
+  index = findCommand( cmdStr9, commandStr );
 
-  TEST( index == -1 );
+  TEST( index == 7 );
 
-  index = findCommand( cmdStr, nullPtr );
-
-  TEST( index == -1 );
 }
 
 int main( void ) {

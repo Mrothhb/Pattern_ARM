@@ -34,13 +34,16 @@ void testloadPatternString() {
     "@-@@@@@-@@@-@@@@@-@@@@@-@@@-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
   const char * patternStr6 =
     "@-@-@-@@@@--@@-@@@@-@@@@@--@@---@---@---@---@---@---@---@---@---";
+  const char * patternStr7 =
+    "------------------------------------------------------------";
+
 
 
   // test given string 
   loadPatternString( pattern, patternStr );
   TEST( pattern[0] == 0xAAAAAAAA );
   TEST( pattern[1] == 0xAAAAAAAA );
-
+  
   // test all default on 
   loadPatternString( pattern, patternStr2 );
   TEST ( pattern[0] == 0xFFFFFFFF );
@@ -64,6 +67,10 @@ void testloadPatternString() {
   loadPatternString( pattern, patternStr6 );
   TEST( pattern[0] == 0xABCDEF98 );
   TEST( pattern[1] == 0x88888888 );
+
+  loadPatternString( pattern, patternStr7);
+  TEST( pattern[0] == 0 );
+  TEST( pattern[1] == 0 );
 }
 
 int main( void ) {

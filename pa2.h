@@ -1,8 +1,8 @@
 /*
  * Filename: pa2.h
- * Author: TODO
- * UserId: TODO
- * Date: TODO
+ * Author: Matt Roth
+ * UserId: cs30xgs
+ * Date: May 1st, 2019
  * Sources of help: Given.
  */
 #ifndef PA2_H

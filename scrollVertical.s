@@ -75,12 +75,14 @@ scrollVertical:
 					@ registers
 					@ Uses 4, from (#_of_regs_saved 
 					@ - 1)*4.
+
 @ Allocate space for the local variables
 
 	sub	sp, sp, LOCAL_SPACE	@ allocate space for all local 
 					@ variables on the stack
 	str	r0, [fp, PATTERN]	@ store pattern[] on the stack
 	str	r1, [fp, OFFSET]	@ store offset on the stack
+
 @ Allocate space for the parameters 
 
 	sub	sp, sp, PARAM_SPACE	@ allocate space for the param-
@@ -156,9 +158,9 @@ loop:
 	lsr	r2, THREE_BYTE_SHIFT	@ shift leftmost byte to rightmost byte
 	str	r2, [fp, TEMP_BYTE_2]	@ temp2 = pattern[1] & MASK
 
-@@ temp1 and temp2 have been initialized and stored in memory  
+@ temp1 and temp2 have been initialized and stored in memory  
 	
-@@ Shift the pattern[0] and pattern[1] >> for positive offset
+@ Shift the pattern[0] and pattern[1] >> for positive offset
 
 @ Insert the temp2 byte back into pattern[0]
 
@@ -205,7 +207,7 @@ negative_offset:
 	lsl	r2, THREE_BYTE_SHIFT	@ shift leftmost byte rightmost byte
 	str	r2, [fp, TEMP_BYTE_2]	@ temp2 = pattern[1] & MASK
 
-@@ temp1 and temp2 now have been initialized and stored in memory
+@ temp1 and temp2 now have been initialized and stored in memory
 
 @ Shift the pattern[0] and pattern[1] << for negative offset
 

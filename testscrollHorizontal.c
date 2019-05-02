@@ -71,7 +71,25 @@ void testscrollHorizontal() {
   scrollHorizontal( pattern, 10);
   TEST( pattern[0] ==  0xFF000000);
   TEST( pattern[1] == 0x000000FF);
-}
+
+  pattern[0] =  0x80;
+  pattern[1] =  0x1;
+  scrollHorizontal( pattern, -1 );
+  TEST( pattern[0] ==  0x1);
+  TEST( pattern[1] == 0x2);
+
+  pattern[0] =  0x11;
+  pattern[1] =  0x88;
+  scrollHorizontal( pattern, 1);
+  TEST( pattern[0] ==  0x88);
+  TEST( pattern[1] == 0x44);
+
+  pattern[0] =  0x1;
+  pattern[1] =  0x8;
+  scrollHorizontal( pattern, 1600);
+  TEST( pattern[0] ==  0x1);
+  TEST( pattern[1] == 0x8);
+ }
 
 int main( void ) {
 

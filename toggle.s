@@ -74,14 +74,15 @@ toggle:
 	str	r1, [fp, PART0_OFFSET]		@ store part0 in memory
 	str	r2, [fp, PART1_OFFSET]		@ store part1 in memory
 
-@ first OR operation on pattern[0]
+@ First OR operation on pattern[0]
 
 	ldr	r3, [fp, PATTERN_0_OFFSET]	@ get the current value of 
 						@ pattern[0]
 	ldr	r2, [fp, PART0_OFFSET]		@ get the current value of part0
 	eor	r3, r3, r2			@ XOR pattern[0] with part0
 	str	r3, [r0]			@ update pattern[0] = r3
-@ second OR operation on pattern[1]
+
+@ Second OR operation on pattern[1]
 
 	ldr	r3, [fp, PATTERN_1_OFFSET]	@ get the current value of patt-
 						@ ern[1]

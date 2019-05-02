@@ -16,7 +16,7 @@
  * Toggles all the bits in pattern specified in part0 and part1
  * If the bit value in part0 or part1 is 1, then its corresponding bit in 
  * pattern should invert (i.e. 1 becomes 0, and 0 becomes 1). However, if the 
- * bit value in part0 or part1is 0, then the corresponding bit in pattern should
+ * bit value in part0 or part1 is 0, then the corresponding bit in pattern should
  * remain same.
  * 
  */

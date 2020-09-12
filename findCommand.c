@@ -1,5 +1,5 @@
 /*
- * Filename: testscrollHorizontal.c
+ * Filename: findCommand.c
  * Author: Matt Roth
  * UserId: cs30xgs
  * Date: May 1, 2019

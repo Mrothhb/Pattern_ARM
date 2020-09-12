@@ -38,10 +38,10 @@ void testscrollVertical() {
   TEST( pattern[1] == 0xAAAAAAFF); 
 
 
-  pattern[0] = 0xFFFFFFFF;
-  pattern[1] = 0xAAAAAAAA;
+  pattern[0] = 0xAAAAAAAA;
+  pattern[1] = 0xFFFFFFFF;
 
-  scrollVertical( pattern, 2);
+  scrollVertical( pattern, -2);
   
   TEST( pattern[0] == 0xAAAAFFFF);
   TEST( pattern[1] == 0xFFFFAAAA); 
@@ -102,13 +102,13 @@ void testscrollVertical() {
   TEST( pattern[0] == 0xFFFFFFFF);
   TEST( pattern[1] == 0xAAAAAAAA); 
 
-  pattern[0] = 0;
-  pattern[1] = 0;
+  pattern[0] = 0x0000000A;
+  pattern[1] = 0x0000000F;
 
-  scrollVertical( pattern, 0);
+  scrollVertical( pattern, 1601);
   
-  TEST( pattern[0] == 0);
-  TEST( pattern[1] == 0); 
+  TEST( pattern[0] == 0x0F000000);
+  TEST( pattern[1] == 0X0A000000); 
 }
 
 int main( void ) {

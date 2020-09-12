@@ -17,7 +17,7 @@
 
 	.equ	PARAM_SPACE, 16		@ allocate space for the parameters
 	.equ	PATTERN_OFFSET, -8	@ allocate space for the pattern[]
-	.equ	CH_OFFSET, -9		@ allocate space for ch
+	.equ	CH_OFFSET, -12		@ allocate space for ch
 	.equ	ALPHABET_OFFSET, -16	@ allocated space for the alphabet 
 	.equ	DIGIT_OFFSET, -20	@ allocate space for the digits
 	.equ	LOWER_BOUND_LETTER, 'A'	@ The lower bound of the ascii range
@@ -57,7 +57,7 @@
  *
  * Stack variables: 
  *	pattern[]  	   - [fp -8]  --  holds the memory address to pattern[] 
- *	ch	   	   - [fp -9]  --  holds the parameter for ch the letter 
+ *	ch	   	   - [fp -12]  --  holds the parameter for ch the letter
  *					  to copy.
  *	alphabetPatterns[] - [fp -16] --  holds the address to the array of the 
  *					  pattern strings for letters.
@@ -75,15 +75,16 @@ character:
 	sub	sp, sp, PARAM_SPACE 		@ allocate space for the param-
 						@ eters
 	str	r0, [fp, PATTERN_OFFSET]	@ store pattern[] in memory
-	strb	r1, [fp, CH_OFFSET]		@ store ch in memory
+	str	r1, [fp, CH_OFFSET]		@ store ch in memory
 
 	str	r2, [fp, ALPHABET_OFFSET]	@ store alphabetPatterns[] in 
 						@ memory
 	str	r3, [fp, DIGIT_OFFSET]		@ store digitPatterns[] in mem-
 						@ ory
 @ Check the ch if its a letter or a digit 
-	ldrsb	r0, [fp, CH_OFFSET]		@ get current value of ch
+	ldr	r0, [fp, CH_OFFSET]		@ get current value of ch
 	bl	toupper				@ convert the ch to upper case
+	str	r0, [fp, CH_OFFSET]		@ store the character back 
 	mov	r2, r0				@ move ch into the r2 for arg3
 	mov	r0, LOWER_BOUND_LETTER		@ move 'A' into r0 for arg1
 	mov	r1, UPPER_BOUND_LETTER		@ move 'Z' into r1 for arg2 
@@ -93,11 +94,11 @@ character:
 	cmp	r0, 1				@ if ( ch == 1 )
 	bne	else_if_digit			@ else if in the digit range
 
-	ldrsb	r3, [fp, CH_OFFSET]		@ get the value of ch
+	ldr	r3, [fp, CH_OFFSET]		@ get the value of ch
 	mov	r0, LOWER_BOUND_LETTER		@ move the 'A' into r0
 	sub	r3, r3, r0			@ ch - 'A'
 	ldr	r0, [fp, PATTERN_OFFSET]	@ get value of pattern[]
-	ldr	r1, [fp, ALPHABET_OFFSET]
+	ldr	r1, [fp, ALPHABET_OFFSET]	@ get the address of alphabet
 	mov	r2, INCR_OFFSET			@ load 4 into the r2 for increm
 						@ menting the index
 	mul	r3, r3, r2			@ r1 * 4 to get the index of the
@@ -110,7 +111,7 @@ character:
 	b	end				@ exit the if block
 @ Check if its a letter LOWER BOUND CASE
 else_if_digit:
-	ldrsb	r2, [fp, CH_OFFSET]		@ get the current value of ch
+	ldr	r2, [fp, CH_OFFSET]		@ get the current value of ch
 	mov	r0, LOWER_DIGIT			@ move 'a' into the r0
 	mov	r1, UPPER_DIGIT			@ move 'z' into the r1
 	bl	intervalContains		@ intervalContains( 'a', 'z', 
@@ -119,7 +120,7 @@ else_if_digit:
 	cmp	r0, 1				@ if (ch == 1)
 	bne	else				@ else its invalid input
 
-	ldrsb	r3, [fp, CH_OFFSET]		@ get value of ch
+	ldr	r3, [fp, CH_OFFSET]		@ get value of ch
 	mov	r0, LOWER_DIGIT			@ mov '0' into the r0 
 	sub	r3, r3, r0			@ ch - '0'
 	ldr	r0, [fp, PATTERN_OFFSET]	@ get the value of pattern[]
@@ -143,5 +144,4 @@ end:
 	sub	sp, fp, FP_OFFSET		@ Set sp to top of saved regis-
 						@ ters
 	pop	{fp, pc}			@ Restore fp; restore lr into pc
-						@ for
-						@  return 
+						@ for return 

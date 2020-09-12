@@ -13,11 +13,16 @@
 // -----------------------------------------------------------------------------
 
 // Arg parsing
-#define MIN_EXPECTED_ARGS 0
-#define MAX_EXPECTED_ARGS 2
+#define MIN_EXPECTED_ARGS 1
+#define MAX_EXPECTED_ARGS 3
 #define PROG_NAME_IDX 0
 #define ON_CHAR_IDX 1
-#define OFF_CHAR_IDX 2 
+#define OFF_CHAR_IDX 2
+#define ARG_LEN 1
+#define ONE_ARG 1
+#define TWO_ARGS 2
+#define THREE_ARGS 3
+#define INVALID_ENTRY -1
 
 #define DEFAULT_ON_CHAR '@'
 #define DEFAULT_OFF_CHAR '-'

@@ -23,11 +23,13 @@ void testscrollHorizontal() {
   unsigned int pattern[PATTERN_LEN] = { 0 };
 
   // Test offset = 0: shouldn't move
-  pattern[0] = 0xAAAAAAAA;
-  pattern[1] = 0xCCCCCCCC;
+  pattern[0] = 0x98765432;
+  pattern[1] = 0xBABEFACE;
 
-  scrollHorizontal( pattern, 0 );
-
+  scrollHorizontal( pattern, 4 );
+  
+  printf("pattern0 is %x \n\n\n ", pattern[0] );
+/*
   TEST( pattern[0] == 0xAAAAAAAA );
   TEST( pattern[1] == 0xCCCCCCCC );
 
@@ -89,6 +91,7 @@ void testscrollHorizontal() {
   scrollHorizontal( pattern, 1600);
   TEST( pattern[0] ==  0x1);
   TEST( pattern[1] == 0x8);
+  */
  }
 
 int main( void ) {

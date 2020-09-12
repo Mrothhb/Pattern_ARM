@@ -38,6 +38,9 @@ void testclear() {
 
   TEST( pattern[0] == ~(pattern0 & 0xFFFFFFFF) );
   TEST( pattern[1] == ~(pattern1 & 0xFFFFFFFF) );
+  printf(" pattern[0] == ~(pattern0 & 0xFFFFFFFF) = %x \n", ~(pattern0 & 0xFFFFFFFF));
+  printf(" pattern[1] == ~(pattern0 & 0xFFFFFFFF) = %x \n", ~(pattern1 & 0xFFFFFFFF));
+
 
   pattern0 = 0xA;
   pattern1 = 0xCCCCCCCC;
@@ -83,19 +86,13 @@ void testclear() {
 
   TEST( pattern[0] == ~(pattern0 & -500 ));
   TEST( pattern[1] == ~(pattern1 & BUFSIZ ));
+  
+  pattern[0] = 0x00010000;
+  pattern[1] = 0x00060000;
 
-  int i;
-  unsigned int j = 5000;
-  for( i = 0; i < j; i++) {
-    pattern0 = i;
-    pattern1 = j;
-    pattern[0] = pattern0;
-    pattern[1] = pattern1;
-    clear(pattern, i , j);
-    TEST( pattern[0] == ~(pattern0 & i));
-    TEST( pattern[1] == ~(pattern1 & j));
-    --j;
-    }
+  clear ( pattern, 0x00010000, 0x00060000);
+
+  TEST( pattern[0] == ~(0x00010000 & 0x00010000));
 }
 
 int main( void ) {

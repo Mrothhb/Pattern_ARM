@@ -103,7 +103,7 @@ testcharacterDeps = testcharacter.o character.o loadPatternString.o \
 		    intervalContains.o
 testscrollVerticalDeps = testscrollVertical.o scrollVertical.o myRem.o 
 testsayDeps = testsay.o say.o printPattern.o outputChar.o character.o \
-	      loadPatternString.o myRem.o
+	      loadPatternString.o myRem.o intervalContains.o
 testinvertDeps = testinvert.o invert.o toggle.o
 testsetDeps = testset.o set.o
 testscrollHorizontalDeps = testscrollHorizontal.o scrollHorizontal.o

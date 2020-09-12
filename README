@@ -1,0 +1,183 @@
+/*
+ * Filename: README
+ * Author: Matt Roth 
+ * Userid: cs30xgs
+ * Date: May 6th, 2019
+ * Sources of help: Harris Textbook, lecture notes, discussion notes, website
+ */
+
+------------------------------------------------------------[  DESCRIPTION  ]--
+
+This program will be displaying an 8x8 "image" using commands 
+implemented with bit operations. The program will be able to manipulate each 
+pixel of the 8x8 image using commands (setting a pixel, clearing a pixel, 
+toggling a pixel, etc). Furthermore, it can implement more complex commands 
+such as scrolling the image and inverting the image. The program may take 
+arguments from the command line, or no arguments from the command line, to 
+determine the character to display inside the image. To see a list of commands
+to use within the program the user can type "help" in the terminal at any point
+during the running program. Using Cntrl D will exit the progam at any time. 
+
+
+------------------------------------------------------------[  COMPILATION  ]--
+
+Compilation is made easy through the use of the Make utility. A file included
+with the source called Makefile specifies how to derive the target program.
+
+To compile the program, simply do the following in a Linux terminal:
+
+	$ make 
+
+If generating new .o files for execution use the following command:
+
+	$ make new 
+
+	or
+
+	$ make clean 
+
+To run the program after make has finished, type the following:
+
+	$ ./pa2 ( no arguments with default characters )
+	$ ./pa2 arg1 ( change the 'on' character )
+	$ ./pa2 arg1 arg2 ( change both 'on' and 'off' characters )
+	$ ./pa2 < inputfile.txt
+
+------------------------------------------------------------[ SAMPLE OUTPUT ]--
+
+An example of normal output... (on stdout)
+
+$ ./pa2 ( without arguments )
+
+Bit ops:
+        set    part0 part1 -- Turns pixels on where part0/part1 bits are 1.
+        clear  part0 part1 -- Turns pixels off where part0/part1 bits are 1.
+        toggle part0 part1 -- Flips pixels where part0/part1 bits are 1.
+        invert             -- Flips all pixels in the image.
+Strings:
+        character c -- Sets the character c into the image.
+                       Allowed characters: A-Z, a-z, 0-9.
+        say str     -- Displays characters from str as a sequence of images.
+Movement:
+        scrollHorizontal offset   -- Scrolls image horizontally.
+                                       positive offset scrolls right
+                                       negative offset scrolls left
+        scrollVertical offset     -- Scrolls image vertically.
+                                       positive offset scrolls down
+                                       negative offset scrolls up
+        translate offsetH offsetV -- Scrolls image offsetH horizontally and
+                                     offsetV vertically.
+Misc:
+        help -- Shows this help message.
+
+Press Ctrl + D to exit.
+
+>>>
+
+./pa2 a ( one arguments )
+	.
+	.
+	.
+
+>>> set 11 11
+--------
+--------
+--------
+----a-aa
+--------
+--------
+--------
+----a-aa
+>>>
+
+./pa2 D Q ( with two arguments )
+	.
+	.
+	.
+
+>>> set -1 22
+QQQQQQQQ
+QQQQQQQQ
+QQQQQQQQ
+QQQDQDDQ
+DDDDDDDD
+DDDDDDDD
+DDDDDDDD
+DDDDDDDD
+>>>
+
+
+Examples of abnormal output... (on stderr)
+
+$ ./pa2 1 1 1 
+
+
+Usage: ./pa2 [on [off]]
+        on  -- The character printed for pixels that are on. Defaults to @.
+        off -- The character printed for pixels that are off. Defaults to -.
+
+	Both on and off must be single characters in the ASCII range [32, 126].
+
+$ ./pa2 aa
+
+        Argument 'on' (aa) is not a single char
+
+------------------------------------------------------------[    TESTING    ]--
+
+I tested my program by comparing its output against the pa2test solution 
+contained in the public directory.
+
+Some specific test cases I tried on the executable:
+  * Out of range size
+  * invalid amount of arguments
+  * invalid size of arguments
+  * invalid type of arguments
+  * ASCII values and chars outside of the range
+  * Inputting too few arguments or too many arguments
+  * Large or small size input 
+
+------------------------------------------------------------[   QUESTIONS   ]--
+
+1. Q: How would you rename a file called foo.txt to foobar.txt?	
+   A: mv foo.txt foobar.txt
+
+2. Q: How would you make a copy of a file called simpleboy.txt in a directory 
+      called midwest one level above your current directory?
+   A: cp ~/midwest/simpleboy.txt ..	
+
+3. Q: What happens when you select text and then middle click in the vim editor 
+      when in insert/input mode? 
+   A: The selected text will be copied and then pasted in the location where the
+      cursor is currently located. 
+
+4. Q: (a) What is a .vimrc file, (b) and how do you create/edit them?
+   A: (a) the profile configuration settings for your vim (b) by opening .vimrc
+      inside of vim.
+
+5. Q: (a) What is the command to cut a full line of text to the clipboard in
+      vim? (b) How do you paste it? (Both the questions refer to using the 
+      keyboard, not using the mouse).
+   A: (a) dd or V then d (b) p 
+
+6. Q: How would you search for a string in vim?    
+   A: To find a word in Vi/Vim, simply type the / or ? key, followed by the word
+      you're searching for. 
+    
+7. Q: How do you turn on line numbers in vim?
+   A: :set nonu or :set nonumber
+ 
+8. Q: How can you quickly (with a single Linux command)change directory to a 
+      directory named fubar that is in your home (login) directory?
+      A: cd ~/fubar
+    
+9. Q: (a) How do you change the permissions on a file? (b) Specify the command 
+      to give write permission to the group.    
+   A: (a) chmod (b) chmod g+w 
+
+10 Q: Why are professional engineers expected to act with integrity?
+   A: Acting with integrity establishes and maintains a productive and reliable
+      working environment. Making sure everyone is doing their part and not 
+      cutting corners can prevent major errors and catastrophe later on in 
+      project development. We need to keep eachother accountable, as well as 
+      ourselves, and make sure correct procedures are being followed, and unique
+      ideas are being maintained. 

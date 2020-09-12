@@ -26,10 +26,12 @@ void testcharacter() {
   unsigned int pattern_test[PATTERN_LEN] = { 0 };
   int return_value;
 
-  return_value = character( pattern,'B', alphabet_patterns, digit_patterns );
+  return_value = character( pattern,'b', alphabet_patterns, digit_patterns );
   loadPatternString(pattern_test, alphabet_patterns[1]);
   TEST( pattern[0] == pattern_test[0] );
   TEST( pattern[1] == pattern_test[1] );
+  printf( " pattern[0] is %x \n\n", pattern[0]);
+  printf( " pattern[1] is %x \n\n", pattern[1]);
   TEST( return_value == 0 );
   pattern[0] = 0;
   pattern[1] = 0;

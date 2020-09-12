@@ -2,7 +2,7 @@
  * Filename: loadPatternString.c
  * Author: Matt Roth 
  * UserId: cs30xgs
- * Date: May 1st, 2019
+ * Date: May 6th, 2019
  * Sources of help: textbook, cse30 website, lecture notes and discussion notes.
  */
 
@@ -26,7 +26,7 @@
  *             
  * Error Conditions: None. 
  *                    
- * Return Value:     None.     
+ * Return Value: None.     
  */
 void loadPatternString( unsigned int pattern[], const char * patternStr ) {
 

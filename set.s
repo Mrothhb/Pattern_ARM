@@ -16,10 +16,9 @@
 	.global	set			@ Specify set as a global symbol
 
 	.equ	PARAM_SPACE, 16		@ allocate space for the parameters
-	.equ	PATTERN_1_OFFSET, -8	@ allocate space for pattern[1]	
-	.equ	PATTERN_0_OFFSET, -12	@ allocate space for the pattern[0]
-	.equ	PART0_OFFSET, -16	@ allocate space for part0
-	.equ	PART1_OFFSET, -20	@ allocate space for part1
+	.equ	PATTERN_OFFSET, -8	@ allocate space for pattern[]	
+	.equ	PART0_OFFSET, -12	@ allocate space for part0
+	.equ	PART1_OFFSET, -16	@ allocate space for part1
 	.equ	PATTERN_INCR, 4		@ access the next element in pattern[]
 
 	.text				@ Switch to Text segment 
@@ -48,11 +47,9 @@
  *	r3 - instr -- used for computational operations and temp for storage 
  *  		      during loads and stores to memory.
  * Stack variables:
- *	pattern[0] - [fp -12] --  holds the memory address to pattern[] in arg 1
- *				  and the pattern[0] element.
- *	pattern[1] - [fp -8]  --  holds the pattern[1] value from arg 1
- *	part0	   - [fp -16] --  holds the bit pattern from arg 2
- *	part1      - [fp -20] --  holds the bit pattern from arg 3	
+ *	pattern[] - [fp -8] --  holds the memory address to pattern[] in arg 1
+ *	part0	   - [fp -12] --  holds the bit pattern from arg 2
+ *	part1      - [fp -26] --  holds the bit pattern from arg 3	
  */
 
 set:
@@ -65,29 +62,26 @@ set:
 
 	sub	sp, sp, PARAM_SPACE 		@ allocate space for the param-
 						@ eters
-	ldr	r3, [r0]			@ load value in pattern[0] in r3
-	str	r3, [fp, PATTERN_0_OFFSET]	@ store pattern[0] in memory
-	ldr	r3, [r0, PATTERN_INCR]		@ load value in pattern[1] in r3
-	str	r3, [fp, PATTERN_1_OFFSET]	@ store pattern[1] in memory
+	str	r0, [fp, PATTERN_OFFSET]	@ store the pattern[] address
 	str	r1, [fp, PART0_OFFSET]		@ store part0 in memory
 	str	r2, [fp, PART1_OFFSET]		@ store part1 in memory
 
 @ first OR operation on pattern[0]
 
-	ldr	r3, [fp, PATTERN_0_OFFSET]	@ get the current value of 
-
+	ldr	r0, [fp, PATTERN_OFFSET]	@ get the current value of 
+	ldr	r3, [r0]			@ get the value from pattern[0]
 	ldr	r2, [fp, PART0_OFFSET]		@ get the current value of part0
 	orr	r3, r3, r2			@ OR pattern[0] with part0
 	str	r3, [r0]			@ update pattern[0] = r3
 
 @ second OR operation on pattern[1]
 
-	ldr	r3, [fp, PATTERN_1_OFFSET]	@ get the current value of patt-
-						@ ern[1]
+	ldr	r0, [fp, PATTERN_OFFSET]	@ get the current value of patt-
+	add	r0, r0, PATTERN_INCR		@ ern[1]
+	ldr	r3, [r0]			@ get the value in pattern[1]
 	ldr	r2, [fp, PART1_OFFSET]		@ get the value of par1
-	
 	orr	r3, r3, r2			@ pattern[1] OR part1
-	str	r3, [r0, PATTERN_INCR]		@ store r3 in pattern[1]
+	str	r3, [r0]			@ store r3 in pattern[1]
 
 @ Standard epilogue
 	sub	sp, fp, FP_OFFSET		@ Set sp to top of saved regis-

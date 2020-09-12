@@ -28,8 +28,8 @@
 	.equ	IS_NEGATIVE, -28	@ allocate space for is_negative;
 
 @ Constants
-	.equ	R_MASK_VAL, 0xFF000000	@ MASK = 0xFF000000
-	.equ	L_MASK_VAL, 0x000000FF	@ MASK = 0x000000FF
+	.equ	L_MASK_VAL, 0xFF000000	@ MASK = 0xFF000000
+	.equ	R_MASK_VAL, 0x000000FF	@ MASK = 0x000000FF
 	.equ	INCR, 4			@ The increment for 'i'
 	.equ	BYTE_SIZE, 8		@ The amount of bits to shift '8'
 	.equ	THREE_BYTE_SHIFT, 24	@ Shift by 24 bits 
@@ -122,31 +122,38 @@ scrollVertical:
 					@ determining which function to use
 	str	r0, [fp, IS_NEGATIVE]	@ store the conditional flag in a local
 					@ variable negative = -1;
+	b	start_loop		@ branch to start loop
 
 @ Positive offset, leave the offset value as is 
 positive_offset:
 
+	mov	r0, 1			@ use -1 as a conditional flag for 
+	str	r0, [fp, IS_NEGATIVE]	@ store a positive conditional flag
+
+start_loop:				@ the begining of the loop
+
 	ldr	r3, [fp, I_OFFSET]	@ load I into r3
 	cmp	r3, r1			@ while( i >= offset)
-	bge	exit			@ exit the loop if i >= offset
+	bge	exit			@ exit the loop if i >= offset	
 
 @ Loop begins to iterate and shift the pattern offset amount of times 
 loop:
 @ Start body of function, check for positive or negative offset
 
 	ldr	r1, [fp, IS_NEGATIVE]	@ load the conditional flag 
-	cmp	r1, 0			@ if ( offset > 0 ) opp. logic
-	bgt	negative_offset		@ use branch to negative byte shifting 
+	cmp	r1, 0			@ if ( offset < 0 )
+	blt	negative_offset		@ use branch to negative byte shifting 
 
 @@ POSITIVE OFFSET BLOCK	
 	ldr	r3, [fp, R_MASK]	@ get the right byte mask
 	ldr	r0, [fp, PATTERN]	@ get the memory address of 
 					@ pattern[]
+
 @ Extract the first byte from pattern[0]					
 
 	ldr	r0, [r0]		@ dereference the pattern[0] element
 	and	r2, r0, r3		@ r2 = pattern[0] & MASK 
-	lsr	r2, THREE_BYTE_SHIFT	@ Shift the leftmost byte to rightmost
+	lsl	r2, THREE_BYTE_SHIFT	@ Shift the extracted bits left
 	str	r2, [fp, TEMP_BYTE_1]	@ temp1 = pattern[0] & MASK
 
 @ Extract the first byte from pattern[1]
@@ -155,62 +162,11 @@ loop:
 	ldr	r0, [r0, INCR]		@ dereference the pattern[1]
 	ldr	r3, [fp, R_MASK]	@ get the current MASK
 	and	r2, r0, r3		@ r2 = pattern[1] & MASK
-	lsr	r2, THREE_BYTE_SHIFT	@ shift leftmost byte to rightmost byte
+	lsl	r2, THREE_BYTE_SHIFT	@ Shift the extracted bits left 
 	str	r2, [fp, TEMP_BYTE_2]	@ temp2 = pattern[1] & MASK
 
-@ temp1 and temp2 have been initialized and stored in memory  
-	
-@ Shift the pattern[0] and pattern[1] >> for positive offset
-
-@ Insert the temp2 byte back into pattern[0]
-
-	ldr	r0, [fp, PATTERN]	@ get the memory address of pattern[]
-	ldr	r0, [r0]		@ dereference pattern[0]
-	ldr	r3, [fp, TEMP_BYTE_2]	@ Get the current value of temp2	
-	lsl	r0, BYTE_SIZE		@ logical shift right 8 times
-	orr	r0, r0, r3		@ pattern[0] | temp2
-	ldr	r1, [fp, PATTERN]	@ get the memory address of pattern[0]
-	str	r0, [r1]		@ pattern[0] = pattern[0] | temp
-
-@ Insert the temp1 byte back into pattern[1]	
-
-	ldr	r0, [fp, PATTERN]	@ get the memory address of pattern[]
-	add	r0, r0, INCR		@ get the memory address of pattern[1]
-	ldr	r0, [r0]		@ dereference pattern[1]
-	ldr	r3, [fp, TEMP_BYTE_1]	@ get the current value of temp1	
-	lsl	r0, BYTE_SIZE		@ logical shift right pattern[1] >>
-	orr	r0, r0, r3		@ pattern[1] | temp1
-	ldr	r1, [fp, PATTERN]	@ get the memory address of pattern[]
-	add	r1, r1, INCR		@ get the memory address of pattern[1]
-	str	r0, [r1]		@ pattern[1] = pattern[1] | temp1
-
-	b	loop_conditional_check	@ branch to the loop conditional check
-
-@@ NEGATIVE OFFSET OFFSET BLOCK 
-negative_offset:
-	ldr	r3, [fp, L_MASK]	@ get the left byte mask 
-	ldr	r0, [fp, PATTERN]	@ get the memory ddress of pattern[]
-
-@ Extract the first byte from pattern[0]
-
-	ldr	r0, [r0]		@ dereference pattern[0] 
-	and	r2, r0, r3		@ r2 = pattern[0] & MASK
-	lsl	r2, THREE_BYTE_SHIFT	@ shift rightmost byte to leftmost byte
-	str	r2, [fp, TEMP_BYTE_1]	@ temp1 = pattern[0] & MASK
-
-@ Extract the first byte from pattern[1]
-
-	ldr	r0, [fp, PATTERN]	@ get the memory address of pattern[]
-	ldr	r0, [r0, INCR]		@ dereference the pattern[1]
-	ldr	r3, [fp, L_MASK]	@ get the current MASK
-	and	r2, r0, r3		@ r2 = pattern[1] & MASK
-	lsl	r2, THREE_BYTE_SHIFT	@ shift leftmost byte rightmost byte
-	str	r2, [fp, TEMP_BYTE_2]	@ temp2 = pattern[1] & MASK
-
-@ temp1 and temp2 now have been initialized and stored in memory
-
-@ Shift the pattern[0] and pattern[1] << for negative offset
-
+@ temp1 and temp2 have been initialized and stored in memory  	
+@ Shift the pattern[0] and pattern[1] >> for postitive offset
 @ Insert the temp2 byte back into pattern[0]
 
 	ldr	r0, [fp, PATTERN]	@ get the memory address of pattern[]
@@ -234,6 +190,53 @@ negative_offset:
 	str	r0, [r1]		@ pattern[1] = pattern[1] | temp1
 
 	b	loop_conditional_check	@ branch to the loop conditional check
+
+@@ NEGATIVE OFFSET OFFSET BLOCK 
+negative_offset:
+	ldr	r3, [fp, L_MASK]	@ get the left byte mask 
+	ldr	r0, [fp, PATTERN]	@ get the memory ddress of pattern[]
+
+@ Extract the first byte from pattern[0]
+
+	ldr	r0, [r0]		@ dereference pattern[0] 
+	and	r2, r0, r3		@ r2 = pattern[0] & MASK
+	lsr	r2, THREE_BYTE_SHIFT	@ Shift the extracted bits right 
+	str	r2, [fp, TEMP_BYTE_1]	@ temp1 = pattern[0] & MASK
+
+@ Extract the first byte from pattern[1]
+
+	ldr	r0, [fp, PATTERN]	@ get the memory address of pattern[]
+	ldr	r0, [r0, INCR]		@ dereference the pattern[1]
+	ldr	r3, [fp, L_MASK]	@ get the current MASK
+	and	r2, r0, r3		@ r2 = pattern[1] & MASK
+	lsr	r2, THREE_BYTE_SHIFT	@ Shift the extracted bits right 
+	str	r2, [fp, TEMP_BYTE_2]	@ temp2 = pattern[1] & MASK
+
+@ temp1 and temp2 now have been initialized and stored in memory
+@ Shift the pattern[0] and pattern[1] << for negative offset
+@ Insert the temp2 byte back into pattern[0]
+
+	ldr	r0, [fp, PATTERN]	@ get the memory address of pattern[]
+	ldr	r0, [r0]		@ dereference pattern[0]
+	ldr	r3, [fp, TEMP_BYTE_2]	@ Get the current value of temp2	
+	lsl	r0, BYTE_SIZE		@ logical shift right 8 times
+	orr	r0, r0, r3		@ pattern[0] | temp2
+	ldr	r1, [fp, PATTERN]	@ get the memory address of pattern[0]
+	str	r0, [r1]		@ pattern[0] = pattern[0] | temp
+
+@ Insert the temp1 byte back into pattern[1]	
+
+	ldr	r0, [fp, PATTERN]	@ get the memory address of pattern[]
+	add	r0, r0, INCR		@ get the memory address of pattern[1]
+	ldr	r0, [r0]		@ dereference pattern[1]
+	ldr	r3, [fp, TEMP_BYTE_1]	@ get the current value of temp1	
+	lsl	r0, BYTE_SIZE		@ logical shift right pattern[1] >>
+	orr	r0, r0, r3		@ pattern[1] | temp1
+	ldr	r1, [fp, PATTERN]	@ get the memory address of pattern[]
+	add	r1, r1, INCR		@ get the memory address of pattern[1]
+	str	r0, [r1]		@ pattern[1] = pattern[1] | temp1
+
+	b	loop_conditional_check	@ branch to the loop conditional check
 		
 @ Loop conditional check
 loop_conditional_check:
@@ -242,8 +245,6 @@ loop_conditional_check:
 	ldr	r1, [fp, OFFSET] 	@ get the current value of offset
 	add	r3, r3, 1		@ i++
 	str	r3, [fp, I_OFFSET]	@ save the new value of i++
-	
-#positive_condition:
 	ldr	r3, [fp, I_OFFSET]	@ get the current value of i
 	cmp	r3, r1			@ while( i < offset )
 	blt	loop			@ return to the start of loop
@@ -252,8 +253,6 @@ loop_conditional_check:
 exit:
 
 @ Standard epilogue
-	sub	sp, fp, FP_OFFSET		@ Set sp to top of saved regis-
-						@ ters
-	pop	{fp, pc}			@ Restore fp; restore lr into pc
-						@ for
-						@  return 
+	sub	sp, fp, FP_OFFSET	@ Set sp to top of saved registers
+	pop	{fp, pc}		@ Restore fp; restore lr into pc
+					@ for return 
